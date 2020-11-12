@@ -38,3 +38,16 @@ select * from AddressBook
 Where City='Guntur'
 Order By FirstName;
 
+ALTER TABLE AddressBook
+ADD addressBookType varchar(100) NOT NULL;
+UPDATE AddressBook
+SET addressBookType=CASE FirstName
+WHEN 'Prakash' THEN 'Friend'
+WHEN 'Simran' THEN 'Profession'
+WHEN 'Soney' THEN 'Family'
+ELSE addressBookType
+END;
+select * from AddressBook;
+
+
+
