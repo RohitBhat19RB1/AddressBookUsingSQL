@@ -49,5 +49,9 @@ ELSE addressBookType
 END;
 select * from AddressBook;
 
+SELECT COUNT(addressBookType),addressBookType from AddressBook
+group by addressBookType;
+
+
 
 
