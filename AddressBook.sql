@@ -27,3 +27,7 @@ delete from AddressBook
 Where MobileNumber=4433773333;
 
 select * from AddressBook;
+
+select * from AddressBook
+Where State='AndhraPradesh' OR City='Bantumilli';
+
