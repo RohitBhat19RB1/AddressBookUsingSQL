@@ -34,3 +34,7 @@ Where State='AndhraPradesh' OR City='Bantumilli';
 select COUNT(State And City) from AddressBook
 Where State='AndhraPradesh' AND City='Bantumilli';
 
+select * from AddressBook
+Where City='Guntur'
+Order By FirstName;
+
