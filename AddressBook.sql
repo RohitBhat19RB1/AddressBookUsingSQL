@@ -20,4 +20,10 @@ VALUES ('Mohit','Bhat','Nerul','NaviMumbai','Maharashtra',182434,4433773333,'moh
 UPDATE AddressBook
 SET State='Kerala'
 WHERE FirstName='Mohit';
+
+select * from AddressBook;
+
+delete from AddressBook
+Where MobileNumber=4433773333;
+
 select * from AddressBook;
