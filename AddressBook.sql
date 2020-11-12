@@ -51,7 +51,11 @@ select * from AddressBook;
 
 SELECT COUNT(addressBookType),addressBookType from AddressBook
 group by addressBookType;
+INSERT INTO AddressName(ID,AddressBookName,FirstName)
+VALUES ('1','PersonalAddressBook','Mohit'),
+('2','FamilyAddressBook','Soney'),
+('3','ProfessionAddressBook','Prakash');
 
-
+select * from AddressName;
 
 
