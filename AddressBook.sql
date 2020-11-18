@@ -1,61 +1,83 @@
-CREATE DATABASE AddressBookService;
-USE AddressBookService;
-CREATE TABLE AddressBook(
-    FirstName varchar(100) NOT NULL PRIMARY KEY,
-    LastName varchar(255) NOT NULL,
-	Address varchar(255) NOT NULL,
-    City varchar(255) NOT NULL,
-    State varchar(255)NOT NUll,
+CREATE DATABASE Address_Book_Service;
+USE Address_Book_Service;
+CREATE TABLE Person(
+	PersonId int auto_increment primary Key,
+    FirstName varchar(100) NOT NULL,
+    LastName varchar(100) NOT NULL,
+	Address varchar(100) NOT NULL,
+    City varchar(100) NOT NULL,
+    State varchar(100)NOT NUll,
     Zip int(6) NULL NUll,
     MobileNumber bigint(10)NOT NULL,
-    EmailId Varchar(320) NOT NULL
-);
+    EmailId Varchar(100) NOT NULL
+    );
+    select * from Person;
+    drop table Person;
+INSERT INTO Person(FirstName,LastName,Address,City,State,Zip,MobileNumber,EmailId)
+VALUES ('Jugal','Kishor','GandhiChowk','Bantumilli','AndhraPradesh',521324,8712443377,'jugal@gmail.com'),
+('Roop','Kumar','AronodayaColony','Hyderabad','Telangana',500081,9295702642,'abc@gmail.com'),
+('Saraiya','Purkana','Krths','Bantumilli','AndhraPradesh',123456,4567890123,'saru@gmail.com'),
+('Manju','Chedhalla','Ponnuru','Guntur','AndhraPradesh',678901,9876543210,'manju@gmail.com'),
+('Akhilesh','Krishna','Perungudi','Chennai','Tamilnadu',876904,9765432167,'akhi@gmail.com');
+Select * from Person;
 
-INSERT INTO AddressBook(FirstName,LastName,Address,City,State,Zip,MobileNumber,EmailId)
-VALUES ('Mohit','Bhat','Nerul','NaviMumbai','Maharashtra',182434,4433773333,'mohit@gmail.com'),
-('Soney','Kumar','AronodayaColony','Hyderabad','Telangana',500081,9295702642,'sony@gmail.com'),
-('Prakash','Purkana','Krths','Bantumilli','AndhraPradesh',123456,4567890123,'prakash@gmail.com'),
-('Simran','Chadha','Ponnuru','Guntur','AndhraPradesh',678901,9876543210,'simran@gmail.com');
-
-UPDATE AddressBook
-SET State='Kerala'
-WHERE FirstName='Mohit';
-
-select * from AddressBook;
-
-delete from AddressBook
-Where MobileNumber=4433773333;
-
-select * from AddressBook;
-
-select * from AddressBook
+SELECT @Person_id:=last_insert_id();
+UPDATE Person
+SET State='Maharastra'
+WHERE FirstName='Akhilesh';
+delete from Person
+Where PersonId=5;
+select * from Person
 Where State='AndhraPradesh' OR City='Bantumilli';
-
-select COUNT(State And City) from AddressBook
+select * from Person
+Where State='AndhraPradesh'
+order by FirstName;
+SELECT  COUNT(PersonId),PersonId from Person
+GROUP BY PersonId;
+select COUNT(State) from Person
 Where State='AndhraPradesh' AND City='Bantumilli';
-
-select * from AddressBook
-Where City='Guntur'
+Select * from Person
+Where City='Bantumilli'
 Order By FirstName;
 
-ALTER TABLE AddressBook
-ADD addressBookType varchar(100) NOT NULL;
-UPDATE AddressBook
-SET addressBookType=CASE FirstName
-WHEN 'Prakash' THEN 'Friend'
-WHEN 'Simran' THEN 'Profession'
-WHEN 'Soney' THEN 'Family'
-ELSE addressBookType
-END;
-select * from AddressBook;
+CREATE TABLE AddressBookType(
+AddressBookId int auto_increment Primary Key,
+AddressBookType varchar(100) NOT NULL,
+AddressBookName varchar(100) NOT NULL
+);
 
-SELECT COUNT(addressBookType),addressBookType from AddressBook
-group by addressBookType;
-INSERT INTO AddressName(ID,AddressBookName,FirstName)
-VALUES ('1','PersonalAddressBook','Mohit'),
-('2','FamilyAddressBook','Soney'),
-('3','ProfessionAddressBook','Prakash');
+INSERT INTO AddressBookType(AddressBookType,AddressBookName)
+values('Friend','FriendAddressBook'),
+('Profession','ProfesionAddressBook'),
+('Family','FamilyAddressBook');
 
-select * from AddressName;
+Delete from AddressBookType
+Where AddressBookID=3;
 
+select * From AddressBookType;
+Drop Table AddressBookType;
+
+CREATE TABLE PersonAddressBook(
+AddressBookId int,
+PersonId int,
+constraint PersonAddressBook_fk FOREIGN KEY (PersonId) REFERENCES Person(PersonId),
+constraint PersonAddressBook_fk1 FOREIGN KEY (AddressBookId) REFERENCES AddressBookType(AddressBookId)
+);
+
+INSERT INTO PersonAddressBook(AddressBookId,PersonId)
+values(1,1),
+(2,1),
+(2,2),
+(1,3),
+(1,4),
+(3,5);
+
+select @addressbook_id_Friend :=AddressBookId From AddressBookType where AddressBookType='Friend';
+select @addressbook_id_Family :=AddressBookId From AddressBookType where AddressBookType='Family';
+select @addressbook_id_Profession :=AddressBookId From AddressBookType where AddressBookType='Profession';
+
+INSERT INTO PersonAddressBook(AddressBookId,PersonId)
+values(@addressbook_id_Family,@Person_id);
+
+Select * from PersonAddressBook; 
 
